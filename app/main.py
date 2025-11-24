@@ -11,7 +11,7 @@ class Distance:
     def other_value_parser(func: Callable) -> Callable:
         """Декоратор для вилучення числового значення з операнда 'other'."""
 
-        def wrapper(self: Any, other: Distance | int) -> Any:
+        def wrapper(self: Any, other: Distance | int | float) -> Any:
             other_value = other
             if isinstance(other, Distance):
                 other_value = other.km
@@ -30,10 +30,10 @@ class Distance:
         return f"Distance(km={self.km})"
 
     @other_value_parser
-    def __add__(self, other: Distance | int | float) -> "Distance":
+    def __add__(self, other: Distance | int | float) -> Distance:
         return Distance(self.km + other)
 
-    def __iadd__(self, other: Distance | int | float) -> "Distance":
+    def __iadd__(self, other: Distance | int | float) -> Distance:
         if isinstance(other, Distance):
             self.km += other.km
         elif isinstance(other, (int , float)):
